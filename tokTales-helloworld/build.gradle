@@ -1,0 +1,50 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+group "com.tokelon.toktales"
+version "0.0.1"
+
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+        /* GitHub Packages repository that contains tokTales artifacts
+         * Credentials can be set as environment variables or passed with -P<name>=<value> to Gradle tasks
+         */
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/tokelon/tokTales")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_PACKAGE_REGISTRY_USER")
+                password = project.findProperty("gpr.user") ?: System.getenv("GITHUB_PACKAGE_REGISTRY_API_KEY")
+            }
+        }
+        //mavenLocal() // Can be used for local development
+    }
+
+    // Can be used to set the frequency that dependencies are checked for updates
+    configurations.all {
+        // Set to 0 to check for updates every build
+        resolutionStrategy.cacheChangingModulesFor 24, 'hours'
+    }
+}
+
+
+// Needed because the root project has no clean task
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

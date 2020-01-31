@@ -1,0 +1,35 @@
+/* tokTales-helloworld-desktop
+ * Desktop module that contains code that is specific for the Desktop platform.
+ */
+group "com.tokelon.toktales"
+version "0.0.1"
+
+
+// Configure this project as a Java application
+apply plugin: 'application'
+
+application {
+    mainClassName = 'com.tokelon.toktales.helloworld.desktop.HelloWorldMain'
+}
+
+tasks.withType(JavaExec) {
+    systemProperty 'logback.configurationFile', 'Data/Assets/logback.xml'
+}
+
+
+dependencies {
+    // Depend on our core module
+    implementation project(':tokTales-helloworld-core')
+
+    // As well as the tokTales Desktop library
+    implementation 'com.tokelon.toktales:tokTales-desktop-library:0.0.1+'
+
+
+    // Use logback at runtime for logging
+    runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+
+// Java version compatibility
+sourceCompatibility = "8"
+targetCompatibility = "8"

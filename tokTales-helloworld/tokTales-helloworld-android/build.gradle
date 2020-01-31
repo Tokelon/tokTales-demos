@@ -1,0 +1,65 @@
+/* tokTales-helloworld-android
+ * Android module that contains code that is specific for the Android platform.
+ */
+group "com.tokelon.toktales"
+version "0.0.1"
+
+
+// Configure this project as an Android application
+apply plugin: 'com.android.application'
+
+// Configure Android properties
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.tokelon.toktales.helloworld"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "0.0.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    // Important to enable support Java 8 features on Android
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    // Important to avoid build error because the Android Packager does not allow multiple files with the same name
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES' // Exclude files that are often part of libraries
+    }
+}
+
+
+dependencies {
+    // Standard Android test libraries
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    // Android compatibility library
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    // Depend on our core module
+    implementation project(':tokTales-helloworld-core')
+
+    // As well as the tokTales Android library
+    implementation 'com.tokelon.toktales:tokTales-android-library:0.0.1+'
+
+
+    // Use logback at runtime for logging
+    runtimeOnly 'com.github.tony19:logback-android:2.0.0'
+}

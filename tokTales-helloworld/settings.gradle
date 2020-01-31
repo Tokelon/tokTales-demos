@@ -1,0 +1,3 @@
+include ':tokTales-helloworld-android', ':tokTales-helloworld-desktop', ':tokTales-helloworld-core'
+
+rootProject.name='tokTales-helloworld'
