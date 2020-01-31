@@ -1,14 +1,16 @@
 /* tokTales-helloworld-core
  * Core module that contains code that is shared between platform modules.
  */
+group "com.tokelon.toktales"
+version "0.0.1"
 
 
-// Declare as a library, since it will be used by our platform modules
+// Declare as library, since it will be used by our platform modules
 apply plugin: 'java-library'
 
 
 dependencies {
-    // Depend on the platform independent tokTales Core library
+    // Dependency on the platform agnostic tokTales Core library
     api 'com.tokelon.toktales:tokTales-core-library:0.0.1+'
 }
 

@@ -13,12 +13,13 @@ application {
 }
 
 tasks.withType(JavaExec) {
+    // Logging configuration file
     systemProperty 'logback.configurationFile', 'Data/Assets/logback.xml'
 }
 
 
 dependencies {
-    // Depend on our core module
+    // Dependency on our core module
     implementation project(':tokTales-helloworld-core')
 
     // As well as the tokTales Desktop library

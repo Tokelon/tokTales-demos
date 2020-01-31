@@ -30,7 +30,7 @@ android {
         }
     }
 
-    // Important to enable support Java 8 features on Android
+    // Important to enable support for Java 8 features on Android
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
@@ -38,7 +38,7 @@ android {
 
     // Important to avoid build error because the Android Packager does not allow multiple files with the same name
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES' // Exclude files that are often part of libraries
+        exclude 'META-INF/DEPENDENCIES' // Exclude meta files that are sometimes part of libraries
     }
 }
 
@@ -50,15 +50,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
+
+    // Dependency on our core module
+    implementation project(':tokTales-helloworld-core')
+
+
     // Android compatibility library
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
-    // Depend on our core module
-    implementation project(':tokTales-helloworld-core')
-
-    // As well as the tokTales Android library
+    // Dependency on the tokTales Android library
     implementation 'com.tokelon.toktales:tokTales-android-library:0.0.1+'
-
 
     // Use logback at runtime for logging
     runtimeOnly 'com.github.tony19:logback-android:2.0.0'
