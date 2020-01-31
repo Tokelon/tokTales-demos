@@ -18,5 +18,8 @@ jobs:
       working-directory: tokTales-helloworld
       run: chmod +x gradlew
     - name: Build with Gradle
+      env:
+        GITHUB_PACKAGE_REGISTRY_API_KEY: ${{secrets.TOKTALES_PACKAGES_TOKEN}}
+        GITHUB_PACKAGE_REGISTRY_USER: ${{secrets.TOKTALES_PACKAGES_USER}}
       working-directory: tokTales-helloworld
       run: ./gradlew build
