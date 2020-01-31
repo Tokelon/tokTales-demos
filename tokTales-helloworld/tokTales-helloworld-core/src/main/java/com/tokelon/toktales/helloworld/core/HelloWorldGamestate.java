@@ -18,9 +18,15 @@ public class HelloWorldGamestate extends BaseGamestate<IGameScene> {
 
 
     private static final String TEXT = "HELLO WORLD";
-    private static final float CHARACTER_SIZE = 32f;
-    private static final IRGBAColor TEXT_COLOR = RGBAColor.createFromCode("#fff");
+    private static final float CHARACTER_SIZE = 64f;
     private static final String FONT_FILE_NAME = "m5x7.ttf";
+    private static final IRGBAColor TEXT_COLOR = RGBAColor.createFromCode("#fff");
+    private static final IRGBAColor BACKGROUND_COLOR = RGBAColor.createFromCode("#000");
+
+    // We don't know the actual text size, so we calculate it on the fly
+    private float finalTextSize = 0f;
+    // We will render properly when all text has been drawn at least once
+    private boolean isTextLoaded = false;
 
 
     private IFontAssetKey fontKey;
@@ -63,33 +69,48 @@ public class HelloWorldGamestate extends BaseGamestate<IGameScene> {
         ICamera camera = getStateRenderer().getCurrentCamera();
 
         // Calculate our rendering sizes
-        float characterSize = Math.max(camera.getWidth(), camera.getHeight()) > 1000 ? CHARACTER_SIZE * 2 : CHARACTER_SIZE;
-        float charDistance = 0f;
-        float charOffset = characterSize / 1.5f + charDistance;
-        float textSize = TEXT.length() * charOffset;
+        float characterSize = Math.max(camera.getWidth(), camera.getHeight()) > 1000 ? CHARACTER_SIZE * 2 : CHARACTER_SIZE; // Make text larger on high resolutions
+        float characterDistance = characterSize / 8f; // The distance from the end of one character to the start of the next
+        IRGBAColor textColor = isTextLoaded ? TEXT_COLOR : BACKGROUND_COLOR; // Set to "invisible" color if text is not complete
 
         charRenderer.setFont(fontAsset.getFont());
-        charRenderer.setColor(TEXT_COLOR);
+        charRenderer.setColor(textColor);
         charRenderer.setSize(characterSize, characterSize);
 
 
-        float currentX = (camera.getWidth() - textSize) / 2f;
+        // Calculate our loop values
+        float currentX = (camera.getWidth() - finalTextSize) / 2f;
         float currentY = (camera.getHeight() - characterSize) / 2f;
+        float calculatedTextSize = 0f;
+        boolean allTextRendered = true;
 
         // Render our text
         charRenderer.startBatchDraw();
         try {
             for(int i = 0; i < TEXT.length(); i++) {
+                // Draw the current character
                 char character = TEXT.charAt(i);
-
                 charRenderer.setPosition(currentX, currentY);
-                charRenderer.drawChar(character);
+                float charWidth = charRenderer.drawChar(character);
 
+                // Calculate the offset to the next character
+                float charDistance = character == ' ' ? characterDistance * 3f : characterDistance; // Make the distance for whitespace larger
+                float charOffset = charWidth + charDistance;
                 currentX += charOffset;
+                calculatedTextSize += charOffset;
+
+                // If a width of zero is returned that character was not rendered or was whitespace
+                allTextRendered = allTextRendered && !(charWidth == 0f && character != ' ');
             }
         }
         finally {
             charRenderer.finishBatchDraw();
+        }
+
+        if(allTextRendered) {
+            // We now know the actual text size and can use it
+            isTextLoaded = true;
+            finalTextSize = calculatedTextSize;
         }
     }
 

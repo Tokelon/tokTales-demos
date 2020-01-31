@@ -18,6 +18,7 @@ public class HelloWorldAdapter extends EmptyGameAdapter {
 
     @Override
     public void onCreate(IEngineContext engineContext) {
+        // Add our gamestate and set as current
         engineContext.getGame().getStateControl().addState("HelloWorld", helloWorldGamestate);
         engineContext.getGame().getStateControl().changeState("HelloWorld");
     }
