@@ -1,2 +1,3 @@
-# tokTales-demos
-tokTales Engine - Demos :: Contains engine demos and example code.
+# tokTales Engine - Demos
+
+> Contains demos and sample code for **[tokTales Engine](https://github.com/Tokelon/tokTales)**.
