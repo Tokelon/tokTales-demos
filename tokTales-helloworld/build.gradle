@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 group "com.tokelon.toktales"
-version "0.0.1"
+version "0.1.0"
 
 
 buildscript {
@@ -22,24 +22,10 @@ allprojects {
         google()
         jcenter()
 
-        /* GitHub Packages repository that contains tokTales artifacts
-         * Credentials can be set as environment variables or passed with -P<name>=<value> to Gradle tasks
-         */
+        // Add the tokTales package repository
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/tokelon/tokTales")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_PACKAGE_REGISTRY_USER")
-                password = project.findProperty("gpr.user") ?: System.getenv("GITHUB_PACKAGE_REGISTRY_API_KEY")
-            }
+            url  "https://dl.bintray.com/tokelon/tokTales"
         }
-        //mavenLocal() // Can be used for local development
-    }
-
-    // Can be used to set the frequency that dependencies are checked for updates
-    configurations.all {
-        // Set to 0 to check for updates every build
-        resolutionStrategy.cacheChangingModulesFor 24, 'hours'
     }
 }
 
