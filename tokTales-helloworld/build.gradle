@@ -20,17 +20,12 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-
-        // Add the tokTales package repository
-        maven {
-            url  "https://dl.bintray.com/tokelon/tokTales"
-        }
+        jcenter() // The tokTales packages are included in JCenter
     }
 }
 
 
-// Needed because the root project has no clean task
+// Added because the root project has no clean task
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
