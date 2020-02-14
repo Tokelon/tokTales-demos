@@ -2,9 +2,11 @@
 
 > Contains demos and sample code for **[tokTales Engine](https://github.com/Tokelon/tokTales)**.
 
+## Projects
+
 | Project Name | Description | Build |
 | ------------ | ----------- | ----- |
-| tokTales-helloworld | A simple demo that loads a font and renders "Hello World" as text. | ![tokTales-helloworld CI](https://github.com/Tokelon/tokTales-demos/workflows/tokTales-helloworld%20CI/badge.svg) |
+| tokTales-helloworld | A simple demo that loads a font and renders "Hello World". | ![tokTales-helloworld CI](https://github.com/Tokelon/tokTales-demos/workflows/tokTales-helloworld%20CI/badge.svg) |
 
 ## Building
 
