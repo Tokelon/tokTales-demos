@@ -2,7 +2,7 @@
  * Android module that contains code that is specific for the Android platform.
  */
 group "com.tokelon.toktales"
-version "0.1.0"
+version "0.2.0"
 
 
 // Configure this project as an Android application
@@ -16,8 +16,8 @@ android {
         applicationId "com.tokelon.toktales.helloworld"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 10
-        versionName "0.1.0"
+        versionCode 20000
+        versionName "0.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -59,7 +59,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     // Dependency on the tokTales Android library
-    implementation 'com.tokelon.toktales:tokTales-android-library:0.1.0'
+    implementation 'com.tokelon.toktales:tokTales-android-library:0.2.0-rc3'
 
     // Use logback at runtime for logging
     runtimeOnly 'com.github.tony19:logback-android:2.0.0'
