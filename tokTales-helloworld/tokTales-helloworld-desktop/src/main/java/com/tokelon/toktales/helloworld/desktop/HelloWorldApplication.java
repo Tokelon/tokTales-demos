@@ -6,7 +6,7 @@ import com.tokelon.toktales.desktop.application.TokTalesApplication;
 import com.tokelon.toktales.desktop.ui.window.IWindowBuilder;
 import com.tokelon.toktales.helloworld.core.HelloWorldAdapter;
 
-public class HelloWorldMain extends TokTalesApplication {
+public class HelloWorldApplication extends TokTalesApplication {
     /* Our application inherits from TokTalesApplication, which will do all the work for us.
      * We just have to tell it how to initialize the engine, using the makeDefault*() methods.
      * For that we can utilize the provided factory getters like getWindowFactory().
@@ -29,7 +29,7 @@ public class HelloWorldMain extends TokTalesApplication {
 
     public static void main(String[] args) throws EngineException {
         // Run the application. This call will not return until the engine is stopped
-        new HelloWorldMain().run(args);
+        new HelloWorldApplication().run(args);
     }
 
 }

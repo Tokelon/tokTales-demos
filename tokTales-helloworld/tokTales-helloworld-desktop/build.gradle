@@ -9,7 +9,7 @@ version "0.2.0"
 apply plugin: 'application'
 
 application {
-    mainClassName = 'com.tokelon.toktales.helloworld.desktop.HelloWorldMain'
+    mainClassName = 'com.tokelon.toktales.helloworld.desktop.HelloWorldApplication'
 }
 
 tasks.withType(JavaExec) {
