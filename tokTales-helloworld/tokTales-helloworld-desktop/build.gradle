@@ -2,14 +2,14 @@
  * Desktop module that contains code that is specific for the Desktop platform.
  */
 group "com.tokelon.toktales"
-version "0.1.0"
+version "0.2.0"
 
 
 // Configure this project as a Java application
 apply plugin: 'application'
 
 application {
-    mainClassName = 'com.tokelon.toktales.helloworld.desktop.HelloWorldMain'
+    mainClassName = 'com.tokelon.toktales.helloworld.desktop.HelloWorldApplication'
 }
 
 tasks.withType(JavaExec) {
@@ -23,7 +23,7 @@ dependencies {
     implementation project(':tokTales-helloworld-core')
 
     // As well as the tokTales Desktop library
-    implementation 'com.tokelon.toktales:tokTales-desktop-library:0.1.0'
+    implementation 'com.tokelon.toktales:tokTales-desktop-library:0.2.0'
 
 
     // Use logback at runtime for logging
