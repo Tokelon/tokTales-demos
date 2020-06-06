@@ -17,7 +17,7 @@ public class HelloWorldApplication extends TokTalesApplication {
 
     @Override
     public IWindowBuilder makeDefaultWindowBuilder() {
-        // Define the size and title for the main application window
+        // Configure the initial size and title for the main application window
         return getWindowFactory().createBuilder(800, 600, "Hello World");
     }
 
