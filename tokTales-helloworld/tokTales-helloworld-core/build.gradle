@@ -11,7 +11,7 @@ apply plugin: 'java-library'
 
 dependencies {
     // Dependency on the platform agnostic tokTales Core library
-    api 'com.tokelon.toktales:tokTales-core-library:0.2.1-rc1'
+    api 'com.tokelon.toktales:tokTales-core-library:0.2.1'
 }
 
 

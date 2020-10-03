@@ -64,7 +64,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     // Dependency on the tokTales Android library
-    implementation 'com.tokelon.toktales:tokTales-android-library:0.2.1-rc1'
+    implementation 'com.tokelon.toktales:tokTales-android-library:0.2.1'
 
     // Use logback at runtime for logging
     runtimeOnly 'com.github.tony19:logback-android:2.0.0'

@@ -23,7 +23,7 @@ dependencies {
     implementation project(':tokTales-helloworld-core')
 
     // As well as the tokTales Desktop library
-    implementation 'com.tokelon.toktales:tokTales-desktop-library:0.2.1-rc1'
+    implementation 'com.tokelon.toktales:tokTales-desktop-library:0.2.1'
 
 
     // Use logback at runtime for logging
