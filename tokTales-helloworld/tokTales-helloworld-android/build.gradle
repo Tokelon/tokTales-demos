@@ -2,7 +2,7 @@
  * Android module that contains code that is specific for the Android platform.
  */
 group "com.tokelon.toktales"
-version "0.2.0"
+version "0.2.1"
 
 
 // Configure this project as an Android application
@@ -10,16 +10,17 @@ apply plugin: 'com.android.application'
 
 // Configure Android properties
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+
     defaultConfig {
         applicationId "com.tokelon.toktales.helloworld"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 20000
-        versionName "0.2.0"
+        targetSdkVersion 30
+        versionCode 20100
+        versionName "0.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -32,6 +33,8 @@ android {
 
     // Important to enable support for Java 8 features on Android
     compileOptions {
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
@@ -45,21 +48,23 @@ android {
 
 dependencies {
     // Standard Android test libraries
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 
+    // Android dependency for Java 8
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
 
     // Dependency on our core module
     implementation project(':tokTales-helloworld-core')
 
 
     // Android compatibility library
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 
     // Dependency on the tokTales Android library
-    implementation 'com.tokelon.toktales:tokTales-android-library:0.2.0'
+    implementation 'com.tokelon.toktales:tokTales-android-library:0.2.1'
 
     // Use logback at runtime for logging
     runtimeOnly 'com.github.tony19:logback-android:2.0.0'
