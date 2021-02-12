@@ -74,10 +74,11 @@ public class BoardRenderer implements IBoardRenderer {
 
         for(int x = 0; x < chessboard.getSize(); x++) {
             for(int y = 0; y < chessboard.getSize(); y++) {
-                String fieldAssetKeyName = x%2 == y%2 ? IBoardGamescene.ASSET_KEY_SQUARE_LIGHT : IBoardGamescene.ASSET_KEY_SQUARE_DARK;
+                float sizeModifier = chesspieceOffset; // Draw squares a bit larger to avoid gaps
+
+                String fieldAssetKeyName = x % 2 == y % 2 ? IBoardGamescene.ASSET_KEY_SQUARE_LIGHT : IBoardGamescene.ASSET_KEY_SQUARE_DARK;
                 ITexture fieldTexture = getTexture(gamescene.getAssetKey(fieldAssetKeyName));
                 if(fieldTexture != null) {
-                    float sizeModifier = chesspieceOffset; // Draw squares a bit larger to avoid gaps
                     drawField(0f, chesspieceLength, sizeModifier, x, y, fieldTexture);
                 }
 
@@ -95,7 +96,7 @@ public class BoardRenderer implements IBoardRenderer {
                     if(fieldSelection.x() == x && fieldSelection.y() == y) {
                         ITexture selectionTexture = getTexture(gamescene.getAssetKey(IBoardGamescene.ASSET_KEY_SELECTION));
                         if(selectionTexture != null) {
-                            drawField(chesspieceOffset, chesspieceLength, 0f, x, y, selectionTexture);
+                            drawField(0f, chesspieceLength, sizeModifier, x, y, selectionTexture);
                         }
                     }
                 }
