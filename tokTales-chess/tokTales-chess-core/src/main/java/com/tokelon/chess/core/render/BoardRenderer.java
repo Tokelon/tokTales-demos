@@ -7,6 +7,7 @@ import com.tokelon.chess.core.state.IBoardGamestate;
 import com.tokelon.toktales.core.content.manage.bitmap.IBitmapAsset;
 import com.tokelon.toktales.core.content.manage.bitmap.IBitmapAssetKey;
 import com.tokelon.toktales.core.content.manage.bitmap.IBitmapAssetManager;
+import com.tokelon.toktales.core.game.model.ICamera;
 import com.tokelon.toktales.core.game.model.IPoint2i;
 import com.tokelon.toktales.core.game.state.InjectGameState;
 import com.tokelon.toktales.core.render.opengl.gl20.IGL11;
@@ -65,6 +66,8 @@ public class BoardRenderer implements IBoardRenderer {
     @Override
     public void renderContents(INamedOptions renderOptions) {
         IBoardGamescene gamescene = gamestate.getActiveScene();
+        ICamera camera = gamescene.getSceneCamera(); // Get from view transformer?
+
         IChessboard chessboard = gamescene.getChessboard();
         IPoint2i fieldSelection = gamescene.getFieldSelection();
 
@@ -74,12 +77,12 @@ public class BoardRenderer implements IBoardRenderer {
 
         for(int x = 0; x < chessboard.getSize(); x++) {
             for(int y = 0; y < chessboard.getSize(); y++) {
-                float sizeModifier = chesspieceOffset; // Draw squares a bit larger to avoid gaps
+                float sizeModifier = chesspieceOffset; // Draw fields a bit larger to avoid gaps
 
                 String fieldAssetKeyName = x % 2 == y % 2 ? IBoardGamescene.ASSET_KEY_SQUARE_LIGHT : IBoardGamescene.ASSET_KEY_SQUARE_DARK;
                 ITexture fieldTexture = getTexture(gamescene.getAssetKey(fieldAssetKeyName));
                 if(fieldTexture != null) {
-                    drawField(0f, chesspieceLength, sizeModifier, x, y, fieldTexture);
+                    drawField(camera, chesspieceLength, 0f, sizeModifier, x, y, fieldTexture);
                 }
 
                 IChesspiece chesspiece = chessboard.getField(x, y);
@@ -89,14 +92,14 @@ public class BoardRenderer implements IBoardRenderer {
                     if(chesspieceAssetKey != null) {
                         ITexture chesspieceTexture = getTexture(chesspieceAssetKey);
                         if(chesspieceTexture != null) {
-                            drawField(chesspieceOffset, chesspieceLength, 0f, x, y, chesspieceTexture);
+                            drawField(camera, chesspieceLength, chesspieceOffset, 0f, x, y, chesspieceTexture);
                         }
                     }
 
                     if(fieldSelection.x() == x && fieldSelection.y() == y) {
                         ITexture selectionTexture = getTexture(gamescene.getAssetKey(IBoardGamescene.ASSET_KEY_SELECTION));
                         if(selectionTexture != null) {
-                            drawField(0f, chesspieceLength, sizeModifier, x, y, selectionTexture);
+                            drawField(camera, chesspieceLength, 0f, sizeModifier, x, y, selectionTexture);
                         }
                     }
                 }
@@ -104,16 +107,16 @@ public class BoardRenderer implements IBoardRenderer {
         }
     }
 
-    protected void drawField(float chesspieceOffset, float chesspieceLength, float sizeModifier, int x, int y, ITexture chesspieceTexture) {
+    protected void drawField(ICamera camera, float chesspieceLength, float chesspieceOffset, float sizeModifier, int x, int y, ITexture chesspieceTexture) {
         imageRenderer.drawImage(chesspieceTexture,
-                x * chesspieceLength + chesspieceOffset,
-                y * chesspieceLength + chesspieceOffset,
-                (x + 1) * chesspieceLength + chesspieceOffset + sizeModifier,
-                y * chesspieceLength + chesspieceOffset,
-                (x + 1) * chesspieceLength + chesspieceOffset + sizeModifier,
-                (y + 1) * chesspieceLength + chesspieceOffset + sizeModifier,
-                x * chesspieceLength + chesspieceOffset,
-                (y + 1) * chesspieceLength + chesspieceOffset + sizeModifier);
+                camera.worldToCameraX(x * chesspieceLength + chesspieceOffset),
+                camera.worldToCameraY(y * chesspieceLength + chesspieceOffset),
+                camera.worldToCameraX((x + 1) * chesspieceLength + chesspieceOffset + sizeModifier),
+                camera.worldToCameraY(y * chesspieceLength + chesspieceOffset),
+                camera.worldToCameraX((x + 1) * chesspieceLength + chesspieceOffset + sizeModifier),
+                camera.worldToCameraY((y + 1) * chesspieceLength + chesspieceOffset + sizeModifier),
+                camera.worldToCameraX(x * chesspieceLength + chesspieceOffset),
+                camera.worldToCameraY((y + 1) * chesspieceLength + chesspieceOffset + sizeModifier));
     }
 
 
