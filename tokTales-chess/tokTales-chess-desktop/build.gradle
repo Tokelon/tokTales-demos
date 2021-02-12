@@ -1,0 +1,32 @@
+/* Desktop module that contains code that is specific for the Desktop platform.
+ */
+
+
+apply plugin: 'application'
+
+application {
+    mainClassName = 'com.tokelon.chess.desktop.ChessApplication'
+}
+
+tasks.withType(JavaExec) {
+    // Logging configuration file
+    systemProperty 'logback.configurationFile', 'Data/Assets/logback.xml'
+
+    enableAssertions = true
+}
+
+
+dependencies {
+    implementation project(':tokTales-chess-core')
+
+    // Desktop library for tokTales Engine
+    implementation 'com.tokelon.toktales:tokTales-desktop-library:0.2.1-SNAPSHOT'
+
+    // Runtime dependency for logging
+    runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+
+// Java version compatibility
+sourceCompatibility = "8"
+targetCompatibility = "8"

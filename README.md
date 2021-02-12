@@ -7,6 +7,7 @@
 | Project Name | Description | Build |
 | ------------ | ----------- | ----- |
 | tokTales-helloworld | A simple demo that loads a font and renders "Hello World". | ![tokTales-helloworld CI](https://github.com/Tokelon/tokTales-demos/workflows/tokTales-helloworld%20CI/badge.svg) |
+| tokTales-chess | A chess app for Android and Desktop platforms. **[WIP]** | ![tokTales-chess CI](https://github.com/Tokelon/tokTales-demos/workflows/tokTales-chess%20CI/badge.svg) |
 
 ## How to Use
 

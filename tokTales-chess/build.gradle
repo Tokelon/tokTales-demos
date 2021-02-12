@@ -1,0 +1,41 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
+allprojects {
+    repositories {
+        google()
+        jcenter() // The tokTales packages are included in JCenter
+
+        //mavenLocal()
+        maven {
+            // tokTales snapshots
+            url 'https://oss.jfrog.org/artifactory/oss-snapshot-local'
+        }
+    }
+}
+
+configurations.all {
+    // For working with maven local
+    //solutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    //resolutionStrategy.cacheDynamicVersionsFor 10, 'minutes'
+}
+
+
+// Added because the root project has no clean task
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

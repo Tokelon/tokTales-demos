@@ -1,0 +1,57 @@
+/* Android module that contains code that is specific for the Android platform.
+ */
+
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+    defaultConfig {
+        applicationId "com.tokelon.chess.android"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    // Java version compatibility
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    // Important to avoid build error because the Android Packager does not allow multiple files with the same name
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES' // Exclude meta files that are sometimes part of libraries
+    }
+}
+
+
+dependencies {
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    implementation project(':tokTales-chess-core')
+
+    // Android compatibility library
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    // Android library for tokTales Engine
+    implementation 'com.tokelon.toktales:tokTales-android-library:0.2.1-SNAPSHOT'
+
+    // Runtime dependency for logging
+    runtimeOnly 'com.github.tony19:logback-android:2.0.0'
+}

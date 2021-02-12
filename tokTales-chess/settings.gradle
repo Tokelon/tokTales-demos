@@ -1,0 +1,1 @@
+include ':tokTales-chess-android', ':tokTales-chess-desktop', ':tokTales-chess-core'
