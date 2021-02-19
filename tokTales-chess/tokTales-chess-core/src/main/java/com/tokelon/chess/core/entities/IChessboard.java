@@ -3,6 +3,9 @@ package com.tokelon.chess.core.entities;
 public interface IChessboard {
 
 
+    public void movePiece(int fromX, int fromY, int toX, int toY);
+
+
     /**
      * @return The number of fields on each of this chessboard's sides.
      */
@@ -15,6 +18,21 @@ public interface IChessboard {
 
     public boolean isFieldValid(int x, int y);
 
-    public void movePiece(int fromX, int fromY, int toX, int toY);
+
+    public default char fieldToNotationX(int fieldX) {
+        return (char)('a' + fieldX);
+    }
+
+    public default byte fieldToNotationY(int fieldY) {
+        return (byte) (getSize() - fieldY);
+    }
+
+    public default int notationToFieldX(char notationX) {
+        return notationX == '0' ? getSize() : (notationX - 'a');
+    }
+
+    public default int notationToFieldY(byte notationY) {
+        return getSize() - notationY;
+    }
 
 }

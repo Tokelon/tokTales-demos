@@ -1,12 +1,11 @@
 package com.tokelon.chess.core.state;
 
+import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.IChessboard;
 import com.tokelon.chess.core.entities.IChesspiece;
 import com.tokelon.toktales.core.content.manage.bitmap.IBitmapAssetKey;
 import com.tokelon.toktales.core.game.model.IPoint2i;
 import com.tokelon.toktales.core.game.state.scene.IGameScene;
-import com.tokelon.toktales.tools.core.registry.IBasicRegistry;
-import com.tokelon.toktales.tools.core.registry.IStringRegistry;
 
 public interface IBoardGamescene extends IGameScene {
 
@@ -30,7 +29,10 @@ public interface IBoardGamescene extends IGameScene {
      */
     public float getChessboardOffset();
 
+
     public IPoint2i getFieldSelection();
+
+    public ChesspieceColor getCurrentPlayer();
 
 
     public IBitmapAssetKey getAssetKey(String assetKeyName);

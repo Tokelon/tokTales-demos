@@ -5,6 +5,10 @@ import com.google.inject.multibindings.MapBinder;
 import com.tokelon.chess.core.entities.Chesspiece;
 import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.ChesspieceType;
+import com.tokelon.chess.core.logic.DummyChessAI;
+import com.tokelon.chess.core.logic.DummyChessEngine;
+import com.tokelon.chess.core.logic.IChessAI;
+import com.tokelon.chess.core.logic.IChessEngine;
 import com.tokelon.chess.core.render.BoardRenderer;
 import com.tokelon.chess.core.render.IBoardRenderer;
 import com.tokelon.chess.core.state.BoardGamescene;
@@ -26,6 +30,9 @@ public class CoreInjectModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(IChessEngine.class).to(DummyChessEngine.class);
+        bind(IChessAI.class).to(DummyChessAI.class);
+
         bind(IBoardGamestate.class).to(BoardGamestate.class);
         bind(IBoardGamescene.class).to(BoardGamescene.class);
         bind(IBoardRenderer.class).to(BoardRenderer.class);
