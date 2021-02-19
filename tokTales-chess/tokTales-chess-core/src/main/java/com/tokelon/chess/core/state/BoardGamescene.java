@@ -146,7 +146,7 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
         }
         else {
             IChesspiece field = getChessboard().getField(fieldX, fieldY);
-            if(field != null && field.getColor() == currentColor) { // TODO: playerColor
+            if(field != null && field.getColor() == playerColor) { // currentColor
                 setFieldSelection(fieldX, fieldY);
             }
         }
