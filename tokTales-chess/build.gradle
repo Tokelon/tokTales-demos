@@ -20,6 +20,8 @@ allprojects {
         google()
         jcenter() // The tokTales packages are included in JCenter
 
+        maven { url 'https://jitpack.io' } // Needed for chesslib
+
         //mavenLocal()
         maven {
             // tokTales snapshots
