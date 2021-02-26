@@ -1,4 +1,4 @@
-package com.tokelon.chess.core.logic.uci;
+package com.tokelon.chess.core.logic.uci.memory;
 
 import java.io.OutputStream;
 

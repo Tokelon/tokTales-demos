@@ -1,5 +1,6 @@
-package com.tokelon.chess.core.logic.uci;
+package com.tokelon.chess.core.logic.uci.memory;
 
+import com.tokelon.chess.core.logic.uci.IUCIConnector;
 import com.tokelon.chess.core.tools.ISplitterOutputStream;
 import com.tokelon.toktales.core.engine.log.ILogger;
 import com.tokelon.toktales.core.engine.log.ILogging;
@@ -8,7 +9,7 @@ import java.io.IOException;
 
 import java9.util.stream.Stream;
 
-public abstract class AbstractUCIConnector implements IUCIConnector {
+public abstract class AbstractMemoryUCIConnector implements IUCIConnector {
 
 
     private final IUCIOutputStream stream;
@@ -16,7 +17,7 @@ public abstract class AbstractUCIConnector implements IUCIConnector {
     private final ILogger logger;
     private final ISplitterOutputStream splitterOut;
 
-    public AbstractUCIConnector(ILogging logging, ISplitterOutputStream splitterOut) {
+    public AbstractMemoryUCIConnector(ILogging logging, ISplitterOutputStream splitterOut) {
         this.logger = logging.getLogger(getClass());
         this.splitterOut = splitterOut;
 
