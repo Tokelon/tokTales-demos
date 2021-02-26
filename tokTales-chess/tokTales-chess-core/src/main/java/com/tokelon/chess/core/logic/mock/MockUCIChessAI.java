@@ -1,9 +1,9 @@
-package com.tokelon.chess.core.logic;
+package com.tokelon.chess.core.logic.mock;
 
 import com.tokelon.chess.core.logic.uci.IUCI;
 import com.tokelon.chess.core.logic.uci.IUCIChessAI;
 
-public class DummyChessAI implements IUCIChessAI {
+public class MockUCIChessAI implements IUCIChessAI {
 
 
     @Override
