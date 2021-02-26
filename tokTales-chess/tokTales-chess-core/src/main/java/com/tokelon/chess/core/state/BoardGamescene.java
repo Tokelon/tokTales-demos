@@ -44,6 +44,13 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
 
 
     @Override
+    public void onAssign() {
+        super.onAssign();
+
+        chessEngine.getAI().newGame();
+    }
+
+    @Override
     public void onStart() {
         if(playerColor == ChesspieceColor.BLACK) {
             startAITurn();
@@ -176,7 +183,7 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
     public boolean playerMove(int fromX, int fromY, int toX, int toY) {
         String from = chessboard.fieldToNotationX(fromX) + Byte.toString(chessboard.fieldToNotationY(fromY));
         String to = chessboard.fieldToNotationX(toX) + Byte.toString(chessboard.fieldToNotationY(toY));
-        logger.info("Move from {} to {}", from, to);
+        logger.info("Move {}{}", from, to);
 
         if(chessEngine.doMove(from, to)) {
             getChessboard().movePiece(fromX, fromY, toX, toY);

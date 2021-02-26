@@ -6,7 +6,15 @@ import com.tokelon.chess.core.entities.Chesspiece;
 import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.ChesspieceType;
 import com.tokelon.chess.core.logic.ChesslibEngine;
+import com.tokelon.chess.core.logic.DummyChessAI;
+import com.tokelon.chess.core.logic.IChessAI;
 import com.tokelon.chess.core.logic.IChessEngine;
+import com.tokelon.chess.core.logic.mock.MockUCIConnector;
+import com.tokelon.chess.core.logic.uci.IUCI;
+import com.tokelon.chess.core.logic.uci.IUCIChessAI;
+import com.tokelon.chess.core.logic.uci.IUCIConnector;
+import com.tokelon.chess.core.logic.uci.IUCIConnectorFactory;
+import com.tokelon.chess.core.logic.uci.UCI;
 import com.tokelon.chess.core.render.BoardRenderer;
 import com.tokelon.chess.core.render.IBoardRenderer;
 import com.tokelon.chess.core.state.BoardGamescene;
@@ -29,6 +37,14 @@ public class CoreInjectModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(IChessEngine.class).to(ChesslibEngine.class);
+
+        bind(IChessAI.class).to(IUCIChessAI.class);
+        bind(IUCIChessAI.class).to(DummyChessAI.class);
+        bind(IUCI.class).to(UCI.class);
+
+        bind(IUCIConnectorFactory.class).to(MockUCIConnector.MockUCIConnectorFactory.class);
+        bind(IUCIConnector.class).toProvider(EngineSetupUCIConnectorProvider.class);
+
 
         bind(IBoardGamestate.class).to(BoardGamestate.class);
         bind(IBoardGamescene.class).to(BoardGamescene.class);

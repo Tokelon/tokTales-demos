@@ -1,7 +1,18 @@
 package com.tokelon.chess.core.logic;
 
-public class DummyChessAI implements IChessAI {
+import com.tokelon.chess.core.logic.uci.IUCI;
+import com.tokelon.chess.core.logic.uci.IUCIChessAI;
 
+public class DummyChessAI implements IUCIChessAI {
+
+
+    @Override
+    public void newGame() {
+    }
+
+    @Override
+    public void nextMove(String fen, String move) {
+    }
 
     @Override
     public void startNextMove() {
@@ -13,7 +24,7 @@ public class DummyChessAI implements IChessAI {
     }
 
     @Override
-    public String calculateNextMove() {
+    public IUCI getUCI() {
         return null;
     }
 

@@ -57,6 +57,16 @@ public class KChessAI implements IChessAI {
     }
 
     @Override
+    public void newGame() {
+        // Not supported
+    }
+
+    @Override
+    public void nextMove(String fen, String move) {
+        // Not needed
+    }
+
+    @Override
     public void startNextMove() {
         SearchParams searchParams = createSearchParams();
         search.start(searchParams);
@@ -76,7 +86,6 @@ public class KChessAI implements IChessAI {
     }
 
 
-    @Override
     public String calculateNextMove() {
         SearchParams searchParams = createSearchParams();
         search.start(searchParams);

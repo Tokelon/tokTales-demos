@@ -1,6 +1,7 @@
 package com.tokelon.chess.core.logic;
 
 import com.github.bhlangonijr.chesslib.Board;
+import com.github.bhlangonijr.chesslib.BoardEventType;
 import com.github.bhlangonijr.chesslib.game.GameContext;
 import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.game.VariationType;
@@ -12,22 +13,32 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ChesslibEngine implements IChessEngine {
+public class KChessEngine implements IChessEngine {
 
+
+    private final IChessAI chessAI;
 
     private final Board board;
 
-    private final IChessAI chessAI;
     private final ILogger logger;
 
     @Inject
-    public ChesslibEngine(ILogging logging, IChessAI chessAI) {
+    public KChessEngine(ILogging logging) {
         this.logger = logging.getLogger(getClass());
+
 
         GameContext gameContext = new GameContext(GameMode.HUMAN_VS_MACHINE, VariationType.NORMAL);
         this.board = new Board(gameContext, true);
 
-        this.chessAI = chessAI;
+        board.addEventListener(BoardEventType.ON_MOVE, event -> {
+            if(event.getType() == BoardEventType.ON_MOVE) {
+                Move move = (Move) event;
+                logger.info("Event move: {}", move);
+                logger.info(board.getFen());
+            }
+        });
+
+        this.chessAI = new KChessAI(board);
     }
 
 
@@ -42,17 +53,11 @@ public class ChesslibEngine implements IChessEngine {
 
         List<Move> moves = board.legalMoves();
         if(!moves.contains(move)) {
-            logger.warn("Not a legal move: {}", move);
+            logger.info("Not a legal move: {}", move);
             return false;
         }
 
-        boolean result = board.doMove(move, true);
-
-        if(result) {
-            chessAI.nextMove(board.getFen(), from + to);
-        }
-
-        return result;
+        return board.doMove(move, true);
     }
 
 }

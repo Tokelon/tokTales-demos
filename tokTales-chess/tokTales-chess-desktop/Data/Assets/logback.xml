@@ -22,7 +22,9 @@
     </appender>
 
     <root level="DEBUG">
-        <appender-ref ref="STDOUT" />
+        <!-- Disable logging to Stdout that's used for UCI />-->
+        <!-- <appender-ref ref="STDOUT" />-->
+
         <appender-ref ref="ASYNC" />
     </root>
 </configuration>
