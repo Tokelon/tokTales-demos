@@ -1,6 +1,7 @@
-package com.tokelon.chess.core;
+package com.tokelon.chess.core.setup.inject;
 
 import com.google.inject.ProvisionException;
+import com.tokelon.chess.core.setup.ISysoutSplitterSetupStep;
 import com.tokelon.chess.core.logic.uci.IUCIConnector;
 import com.tokelon.chess.core.logic.uci.IUCIConnectorFactory;
 import com.tokelon.chess.core.tools.ISplitterOutputStream;

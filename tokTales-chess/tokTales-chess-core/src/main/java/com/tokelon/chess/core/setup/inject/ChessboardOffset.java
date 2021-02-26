@@ -1,4 +1,4 @@
-package com.tokelon.chess.core;
+package com.tokelon.chess.core.setup.inject;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

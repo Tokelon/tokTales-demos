@@ -1,6 +1,6 @@
 package com.tokelon.chess.core.state;
 
-import com.tokelon.chess.core.ChessboardOffset;
+import com.tokelon.chess.core.setup.inject.ChessboardOffset;
 import com.tokelon.chess.core.render.IBoardRenderer;
 import com.tokelon.toktales.core.game.model.ICamera;
 import com.tokelon.toktales.core.game.state.BaseGamestate;

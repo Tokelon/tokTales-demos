@@ -1,4 +1,4 @@
-package com.tokelon.chess.core;
+package com.tokelon.chess.core.setup;
 
 import com.tokelon.chess.core.tools.ISplitterOutputStream;
 import com.tokelon.chess.core.tools.SplitterOutputStream;

@@ -1,10 +1,11 @@
 package com.tokelon.chess.android;
 
 import com.tokelon.chess.core.ChessAdapter;
-import com.tokelon.chess.core.CoreInjectModule;
-import com.tokelon.chess.core.ISysoutSplitterSetupStep;
-import com.tokelon.chess.core.SysoutSplitterSetupStep;
+import com.tokelon.chess.core.setup.ISysoutSplitterSetupStep;
+import com.tokelon.chess.core.setup.SysoutSplitterSetupStep;
+import com.tokelon.chess.core.setup.inject.CoreChessInjectConfig;
 import com.tokelon.toktales.android.application.TokTalesApp;
+import com.tokelon.toktales.android.engine.inject.MasterAndroidInjectConfig;
 import com.tokelon.toktales.core.engine.setup.DefaultEngineSetup;
 import com.tokelon.toktales.core.engine.setup.IEngineSetup;
 import com.tokelon.toktales.core.game.IGameAdapter;
@@ -20,9 +21,9 @@ public class ChessApp extends TokTalesApp {
 
     @Override
     public IHierarchicalInjectConfig makeDefaultInjectConfig() {
-        return super.makeDefaultInjectConfig()
-                .extend(new CoreInjectModule())
-                .extend(new AndroidInjectModule());
+        return new MasterAndroidInjectConfig()
+                .extend(new CoreChessInjectConfig())
+                .extend(new AndroidChessInjectConfig());
     }
 
     @Override
