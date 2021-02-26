@@ -12,7 +12,10 @@ public class CoreChessInjectConfig extends HierarchicalInjectConfig {
         extend(new CoreInjectModule());
         extend(new UCIInjectModule());
 
-        override(new MockOverrideInjectModule());
+        extend(new EngineInjectModule());
+
+        // Only for running without engine
+        //override(new MockOverrideInjectModule());
     }
 
 }

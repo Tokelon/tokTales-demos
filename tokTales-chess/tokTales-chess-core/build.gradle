@@ -9,8 +9,13 @@ dependencies {
     // Core library for tokTales Engine
     api 'com.tokelon.toktales:tokTales-core-library:0.2.1-SNAPSHOT'
 
-
+    // Chess base
     api files('libs/kengine/kengine-1.0.1.jar')
+    //api 'com.github.bhlangonijr:kengine:1.0.1' // Is compiled with newer Java
+    //api 'com.github.bhlangonijr:chesslib:1.2.5'
+
+    // UCI chess engine
+    api files('libs/karballo/karballo-master-27_01_2018-jvm[Java_8].jar')
 }
 
 
