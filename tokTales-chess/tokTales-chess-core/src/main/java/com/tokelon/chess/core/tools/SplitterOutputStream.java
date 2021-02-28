@@ -2,10 +2,10 @@ package com.tokelon.chess.core.tools;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SplitterOutputStream extends OutputStream implements ISplitterOutputStream {
 
@@ -18,7 +18,7 @@ public class SplitterOutputStream extends OutputStream implements ISplitterOutpu
     }
 
     public SplitterOutputStream(List<OutputStream> streams) {
-        this.streams = new ArrayList<>(streams);
+        this.streams = new CopyOnWriteArrayList<>(streams);
         this.streamsUnmodifiable = Collections.unmodifiableList(streams);
     }
 
