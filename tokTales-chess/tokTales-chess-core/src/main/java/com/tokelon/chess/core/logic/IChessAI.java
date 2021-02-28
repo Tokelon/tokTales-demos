@@ -4,6 +4,8 @@ public interface IChessAI {
     // Implement listener support?
 
 
+    public void initialize();
+
     public void newGame();
 
     public void nextMove(String fen, String move);

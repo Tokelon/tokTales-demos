@@ -12,10 +12,14 @@ public class UCIChessAI implements IUCIChessAI {
     @Inject
     public UCIChessAI(IUCI uci) {
         this.uci = uci;
-
-        uci.uci();
     }
 
+
+    @Override
+    public void initialize() {
+        uci.uci();
+        //uci.isReady(); needed?
+    }
 
     @Override
     public void newGame() {

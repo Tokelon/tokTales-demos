@@ -7,6 +7,10 @@ public class MockUCIChessAI implements IUCIChessAI {
 
 
     @Override
+    public void initialize() {
+    }
+
+    @Override
     public void newGame() {
     }
 

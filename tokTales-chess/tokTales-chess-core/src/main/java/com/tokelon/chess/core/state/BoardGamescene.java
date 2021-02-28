@@ -47,6 +47,7 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
     public void onAssign() {
         super.onAssign();
 
+        chessEngine.getAI().initialize();
         chessEngine.getAI().newGame();
     }
 
