@@ -7,6 +7,7 @@ import com.tokelon.toktales.core.engine.log.ILogger;
 import com.tokelon.toktales.core.engine.log.ILogging;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import karballo.Config;
 import karballo.book.FileBook;
@@ -25,19 +26,19 @@ public class KarballoUCIConnector extends AbstractMemoryUCIConnector {
         Utils.instance = new JvmPlatformUtils();
     }
 
-    private final Uci uci;
+    private final Uci internalUci;
 
     private final ILogger logger;
 
     @Inject
-    public KarballoUCIConnector(ILogging logging, ISplitterOutputStream splitterOut) {
-        super(logging, splitterOut);
+    public KarballoUCIConnector(ILogging logging, ISplitterOutputStream splitterOut, IUCIConnectionSink defaultSink) {
+        super(logging, splitterOut, defaultSink);
 
         this.logger = logging.getLogger(getClass());
-        this.uci = createUci(new Config());
+        this.internalUci = createInternalUci(new Config());
     }
 
-    protected Uci createUci(Config config) {
+    protected Uci createInternalUci(Config config) {
         FileBook fileBook = new FileBook("/book_small.bin");
         config.setBook(fileBook);
 
@@ -48,7 +49,7 @@ public class KarballoUCIConnector extends AbstractMemoryUCIConnector {
     @Override
     public void send(String input) {
         logger.debug("Sending UCI: {}", input);
-        uci.processLine(input);
+        internalUci.processLine(input);
     }
 
 
@@ -57,15 +58,17 @@ public class KarballoUCIConnector extends AbstractMemoryUCIConnector {
 
 
         private final ILogging logging;
+        private final Provider<IUCIConnectionSink> defaultSinkProvider;
 
         @Inject
-        public KarballoUCIConnectorFactory(ILogging logging) {
+        public KarballoUCIConnectorFactory(ILogging logging, Provider<IUCIConnectionSink> defaultSinkProvider) {
             this.logging = logging;
+            this.defaultSinkProvider = defaultSinkProvider;
         }
 
         @Override
         public IUCIConnector create(ISplitterOutputStream splitterOut) {
-            return new KarballoUCIConnector(logging, splitterOut);
+            return new KarballoUCIConnector(logging, splitterOut, defaultSinkProvider.get());
         }
     }
 

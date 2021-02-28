@@ -9,11 +9,11 @@ public interface IUCIConnector extends Closeable {
 
     public void send(String input);
 
-    public String send(String input, String until);
+    public Stream<String> send(String input, String until);
 
-    public String receive(String until);
+    public Stream<String> receive(String until);
 
 
-    public Stream<String> getInputLines();
+    public Stream<String> readInput();
 
 }

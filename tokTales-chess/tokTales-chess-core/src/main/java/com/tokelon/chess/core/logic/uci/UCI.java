@@ -6,6 +6,7 @@ import com.tokelon.toktales.core.engine.log.ILogging;
 import javax.inject.Inject;
 
 import java9.util.Optional;
+import java9.util.stream.Stream;
 
 public class UCI implements IUCI {
 
@@ -23,7 +24,7 @@ public class UCI implements IUCI {
 
     @Override
     public void uci() {
-        String output = uciConnector.send("uci", "uciok");
+        Stream<String> output = uciConnector.send("uci", "uciok");
         // id name x
         // id author x
         // option name id
@@ -33,7 +34,6 @@ public class UCI implements IUCI {
         // option max x
         // option var x
         //option name Style type combo default Normal var Solid var Normal var Risky\n
-        logger.info(output);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class UCI implements IUCI {
 
     @Override
     public String getLastMove() {
-        Optional<String> bestmove = uciConnector.getInputLines().filter(s -> s.contains("bestmove")).findFirst();
+        Optional<String> bestmove = uciConnector.readInput().filter(s -> s.contains("bestmove")).findFirst();
         if(bestmove.isEmpty()) {
             return null;
         }
