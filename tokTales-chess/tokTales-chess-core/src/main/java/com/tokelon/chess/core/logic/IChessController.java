@@ -1,12 +1,12 @@
 package com.tokelon.chess.core.logic;
 
 import com.tokelon.chess.core.entities.ChesspieceColor;
-import com.tokelon.chess.core.entities.IChessboard;
 
 public interface IChessController {
 
 
-    public IChessboard getChessboard();
+    public IChessBoardController getBoardController();
+
 
     public ChesspieceColor getCurrentColor();
 

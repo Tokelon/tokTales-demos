@@ -1,8 +1,7 @@
 package com.tokelon.chess.core.logic.mock;
 
-import com.tokelon.chess.core.entities.Chessboard;
 import com.tokelon.chess.core.entities.ChesspieceColor;
-import com.tokelon.chess.core.entities.IChessboard;
+import com.tokelon.chess.core.logic.IChessBoardController;
 import com.tokelon.chess.core.logic.IChessController;
 import com.tokelon.chess.core.logic.IPlayer;
 import com.tokelon.chess.core.logic.Player;
@@ -10,13 +9,13 @@ import com.tokelon.chess.core.logic.Player;
 public class MockChessController implements IChessController {
 
 
-    private final Chessboard chessboard = new Chessboard();
+    private final MockChessBoardController boardController = new MockChessBoardController();
     private final Player player = new Player();
 
 
     @Override
-    public IChessboard getChessboard() {
-        return chessboard;
+    public IChessBoardController getBoardController() {
+        return boardController;
     }
 
     @Override

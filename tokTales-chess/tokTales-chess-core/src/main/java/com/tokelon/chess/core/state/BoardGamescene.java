@@ -63,7 +63,7 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
 
     @Override
     public IChessboard getChessboard() {
-        return chessController.getChessboard();
+        return chessController.getBoardController().getChessboard();
     }
 
 

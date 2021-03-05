@@ -1,15 +1,14 @@
 package com.tokelon.chess.core.logic;
 
-import com.tokelon.chess.core.entities.Chessboard;
 import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.IChessboard;
 import com.tokelon.toktales.core.engine.log.ILogger;
 import com.tokelon.toktales.core.engine.log.ILogging;
 
-public abstract class AbstractChessController implements IChessController {
+import javax.inject.Inject;
 
+public class AbstractChessController implements IChessController {
 
-    private Chessboard chessboard;
 
     private ChesspieceColor currentColor;
 
@@ -17,20 +16,18 @@ public abstract class AbstractChessController implements IChessController {
     private IPlayer black;
 
     private final ILogger logger;
+    private final IChessBoardController boardController;
 
-    public AbstractChessController(ILogging logging) {
+    @Inject
+    public AbstractChessController(ILogging logging, IChessBoardController boardController) {
         this.logger = logging.getLogger(getClass());
+        this.boardController = boardController;
     }
 
 
-    protected abstract boolean doMove(String from, String to);
-
-    protected abstract String getFen();
-
-
     @Override
-    public IChessboard getChessboard() {
-        return chessboard;
+    public IChessBoardController getBoardController() {
+        return boardController;
     }
 
     @Override
@@ -46,10 +43,11 @@ public abstract class AbstractChessController implements IChessController {
 
     @Override
     public void newGame(IPlayer white, IPlayer black) {
+        getBoardController().newGame(white, black);
+
         this.white = white;
         this.black = black;
 
-        this.chessboard = Chessboard.createInitial();
         this.currentColor = ChesspieceColor.WHITE;
 
         if(white.isEngine()) {
@@ -98,15 +96,17 @@ public abstract class AbstractChessController implements IChessController {
 
 
     public boolean playerMove(int fromX, int fromY, int toX, int toY, String addition) {
+        IChessboard chessboard = getBoardController().getChessboard();
+
         String from = chessboard.fieldToNotationX(fromX) + Byte.toString(chessboard.fieldToNotationY(fromY));
         String to = chessboard.fieldToNotationX(toX) + Byte.toString(chessboard.fieldToNotationY(toY));
         logger.info("Move {}{}", from, to);
 
-        if(doMove(from, to)) {
-            getChessboard().movePiece(fromX, fromY, toX, toY);
+        if(getBoardController().doMove(from, to)) {
+            chessboard.movePiece(fromX, fromY, toX, toY);
 
             if(getCurrentPlayer().isEngine()) {
-                getCurrentPlayer().getEngine().nextMove(getFen(), from + to);
+                getCurrentPlayer().getEngine().nextMove(getBoardController().getFen(), from + to);
             }
 
             logger.info("Move completed from [{}, {}] to [{}, {}]", fromX, fromY, toX, toY);
@@ -119,6 +119,8 @@ public abstract class AbstractChessController implements IChessController {
     }
 
     public boolean engineMove(String move) {
+        IChessboard chessboard = getBoardController().getChessboard();
+
         int fromX = chessboard.notationToFieldX(move.charAt(0));
         int fromY = chessboard.notationToFieldY(Byte.parseByte(String.valueOf(move.charAt(1))));
         int toX = chessboard.notationToFieldX(move.charAt(2));
