@@ -1,6 +1,6 @@
 package com.tokelon.chess.core.logic;
 
-public interface IChessAI {
+public interface IChessEngine {
     // Implement listener support?
 
 

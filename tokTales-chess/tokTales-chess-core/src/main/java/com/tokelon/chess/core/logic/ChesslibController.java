@@ -20,8 +20,8 @@ public class ChesslibController extends AbstractChessController {
     private final ILogger logger;
 
     @Inject
-    public ChesslibController(ILogging logging, IChessAI chessAI) {
-        super(logging, chessAI);
+    public ChesslibController(ILogging logging, IChessEngine chessEngine) {
+        super(logging, chessEngine);
 
         this.logger = logging.getLogger(getClass());
 
@@ -43,7 +43,7 @@ public class ChesslibController extends AbstractChessController {
         boolean result = board.doMove(move, true);
 
         if(result) {
-            getAI().nextMove(board.getFen(), from + to);
+            getEngine().nextMove(board.getFen(), from + to);
         }
 
         return result;

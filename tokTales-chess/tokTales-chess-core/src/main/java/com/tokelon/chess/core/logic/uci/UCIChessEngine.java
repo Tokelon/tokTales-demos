@@ -2,7 +2,7 @@ package com.tokelon.chess.core.logic.uci;
 
 import javax.inject.Inject;
 
-public class UCIChessAI implements IUCIChessAI {
+public class UCIChessEngine implements IUCIChessEngine {
 
 
     public static final int DEFAULT_SEARCH_TIME_MILLIS = 1000;
@@ -10,7 +10,7 @@ public class UCIChessAI implements IUCIChessAI {
     private final IUCI uci;
 
     @Inject
-    public UCIChessAI(IUCI uci) {
+    public UCIChessEngine(IUCI uci) {
         this.uci = uci;
     }
 

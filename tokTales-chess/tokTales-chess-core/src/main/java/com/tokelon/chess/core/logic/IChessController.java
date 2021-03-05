@@ -4,10 +4,9 @@ import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.IChessboard;
 
 public interface IChessController {
-    // TODO: Merge into IGameEngine
 
 
-    public IChessAI getAI();
+    public IChessEngine getEngine();
 
     public boolean doMove(String from, String to);
 

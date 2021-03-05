@@ -17,17 +17,17 @@ public abstract class AbstractChessController implements IChessController {
 
 
     private final ILogger logger;
-    private final IChessAI chessAI;
+    private final IChessEngine chessEngine;
 
-    public AbstractChessController(ILogging logging, IChessAI chessAI) {
+    public AbstractChessController(ILogging logging, IChessEngine chessEngine) {
         this.logger = logging.getLogger(getClass());
-        this.chessAI = chessAI;
+        this.chessEngine = chessEngine;
     }
 
 
     @Override
-    public IChessAI getAI() {
-        return chessAI;
+    public IChessEngine getEngine() {
+        return chessEngine;
     }
 
 
@@ -48,7 +48,7 @@ public abstract class AbstractChessController implements IChessController {
 
     @Override
     public void initialize() {
-        getAI().initialize();
+        getEngine().initialize();
     }
 
     @Override
@@ -57,13 +57,13 @@ public abstract class AbstractChessController implements IChessController {
         this.currentColor = ChesspieceColor.WHITE;
         this.playerColor = ChesspieceColor.WHITE;
 
-        getAI().newGame();
+        getEngine().newGame();
     }
 
 
     @Override
     public void update(long timeMillis) {
-        String nextMove = getAI().getAndResetNextMove();
+        String nextMove = getEngine().getAndResetNextMove();
         if(nextMove != null) {
             engineMove(nextMove);
             startNextTurn();
@@ -98,7 +98,7 @@ public abstract class AbstractChessController implements IChessController {
     }
 
     public void startAITurn() {
-        getAI().startNextMove();
+        getEngine().startNextMove();
     }
 
 

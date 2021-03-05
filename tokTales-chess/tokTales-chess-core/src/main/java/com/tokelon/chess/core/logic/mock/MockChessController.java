@@ -3,18 +3,19 @@ package com.tokelon.chess.core.logic.mock;
 import com.tokelon.chess.core.entities.Chessboard;
 import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.IChessboard;
-import com.tokelon.chess.core.logic.IChessAI;
+import com.tokelon.chess.core.logic.IChessEngine;
 import com.tokelon.chess.core.logic.IChessController;
 
 public class MockChessController implements IChessController {
 
 
     private final Chessboard chessboard = new Chessboard();
-    private final MockUCIChessAI chessAI = new MockUCIChessAI();
+    private final MockUCIChessEngine chessEngine = new MockUCIChessEngine();
+
 
     @Override
-    public IChessAI getAI() {
-        return chessAI;
+    public IChessEngine getEngine() {
+        return chessEngine;
     }
 
     @Override
