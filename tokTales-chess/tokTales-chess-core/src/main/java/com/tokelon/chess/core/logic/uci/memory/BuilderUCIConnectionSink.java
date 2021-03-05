@@ -16,8 +16,8 @@ public class BuilderUCIConnectionSink extends OutputStream implements IUCIConnec
     }
 
     @Override
-    public List<String> receiveUntilLineContains(String until) {
-        String input = readFromBuilder(until, getBuilder());
+    public List<String> receiveUntilLineContains(String terminator) {
+        String input = readFromBuilder(terminator, getBuilder());
         return splitIntoLines(input);
     }
 

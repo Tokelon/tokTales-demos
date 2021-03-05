@@ -7,8 +7,8 @@ import com.tokelon.chess.core.logic.uci.IUCIChessAI;
 import com.tokelon.chess.core.logic.uci.IUCIConnector;
 import com.tokelon.chess.core.logic.uci.UCI;
 import com.tokelon.chess.core.logic.uci.UCIChessAI;
-import com.tokelon.chess.core.logic.uci.memory.BuilderUCIConnectionSink;
 import com.tokelon.chess.core.logic.uci.memory.IUCIConnectionSink;
+import com.tokelon.chess.core.logic.uci.memory.QueueUCIConnectionSink;
 
 public class UCIInjectModule extends AbstractModule {
 
@@ -22,7 +22,7 @@ public class UCIInjectModule extends AbstractModule {
 
         bind(IUCIConnector.class).toProvider(EngineSetupUCIConnectorProvider.class);
 
-        bind(IUCIConnectionSink.class).to(BuilderUCIConnectionSink.class); // Not very efficient memory wise
+        bind(IUCIConnectionSink.class).to(QueueUCIConnectionSink.class);
     }
 
 }
