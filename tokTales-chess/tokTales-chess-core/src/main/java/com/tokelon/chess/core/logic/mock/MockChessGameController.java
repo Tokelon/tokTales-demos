@@ -42,4 +42,9 @@ public class MockChessGameController implements IChessGameController {
         return true;
     }
 
+    @Override
+    public boolean tryMove(String move) {
+        return true;
+    }
+
 }

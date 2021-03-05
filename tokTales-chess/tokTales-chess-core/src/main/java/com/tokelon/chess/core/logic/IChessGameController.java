@@ -15,7 +15,7 @@ public interface IChessGameController {
     //public IPlayer getBlack();
 
 
-    // TODO: Add gamemode, elo, fen, options etc
+    // TODO: Add fen, options etc
     public void newGame(IPlayer white, IPlayer black);
     //public void newGame(IPlayer playerOne, IPlayer playerTwo, String fen);
 
@@ -23,6 +23,7 @@ public interface IChessGameController {
 
 
     public boolean tryMove(int fromX, int fromY, int toX, int toY, String addition);
-    //public boolean tryMove(String move); // TODO: Implement
+
+    public boolean tryMove(String move);
 
 }

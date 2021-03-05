@@ -15,8 +15,8 @@ public class MockChessBoardController implements IChessBoardController {
     }
 
     @Override
-    public boolean doMove(String from, String to) {
-        return true;
+    public boolean doMove(String move) {
+        return false;
     }
 
     @Override
@@ -26,6 +26,11 @@ public class MockChessBoardController implements IChessBoardController {
 
     @Override
     public String getFen() {
+        return "";
+    }
+
+    @Override
+    public String translateMove(int fromX, int fromY, int toX, int toY) {
         return "";
     }
 

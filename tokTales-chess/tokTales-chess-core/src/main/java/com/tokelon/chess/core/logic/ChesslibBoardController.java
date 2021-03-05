@@ -57,17 +57,34 @@ public class ChesslibBoardController implements IChessBoardController {
 
 
     @Override
-    public boolean doMove(String from, String to) {
-        Move move = new Move(from + to, null);
+    public boolean doMove(String move) {
+        Move boardMove = new Move(move, null);
 
         List<Move> moves = board.legalMoves();
-        if(!moves.contains(move)) {
-            logger.warn("Not a legal move: {}", move);
+        if(!moves.contains(boardMove)) {
+            logger.warn("Not a legal boardMove: {}", boardMove);
             return false;
         }
 
-        return board.doMove(move, true);
+        int fromX = chessboard.notationToFieldX(move.charAt(0));
+        int fromY = chessboard.notationToFieldY(Byte.parseByte(String.valueOf(move.charAt(1))));
+        int toX = chessboard.notationToFieldX(move.charAt(2));
+        int toY = chessboard.notationToFieldY(Byte.parseByte(String.valueOf(move.charAt(3))));
+        String addition = move.substring(4); // TODO: Use for special moves
+
+        boolean success = board.doMove(boardMove, true);
+        if(success) {
+            chessboard.movePiece(fromX, fromY, toX, toY);
+
+            logger.info("Move completed from [{}, {}] to [{}, {}]", fromX, fromY, toX, toY);
+        }
+        else {
+            logger.info("Move failed from [{}, {}] to [{}, {}]", fromX, fromY, toX, toY);
+        }
+
+        return success;
     }
+
 
     @Override
     public IChessboard getChessboard() {
@@ -77,6 +94,14 @@ public class ChesslibBoardController implements IChessBoardController {
     @Override
     public String getFen() {
         return board.getFen();
+    }
+
+
+    @Override
+    public String translateMove(int fromX, int fromY, int toX, int toY) {
+        String from = chessboard.fieldToNotationX(fromX) + Byte.toString(chessboard.fieldToNotationY(fromY));
+        String to = chessboard.fieldToNotationX(toX) + Byte.toString(chessboard.fieldToNotationY(toY));
+        return from + to;
     }
 
 }
