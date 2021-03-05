@@ -7,7 +7,7 @@ import com.tokelon.toktales.core.engine.log.ILogging;
 
 import javax.inject.Inject;
 
-public class AbstractChessController implements IChessController {
+public class ChessGameController implements IChessGameController {
 
 
     private ChesspieceColor currentColor;
@@ -19,7 +19,7 @@ public class AbstractChessController implements IChessController {
     private final IChessBoardController boardController;
 
     @Inject
-    public AbstractChessController(ILogging logging, IChessBoardController boardController) {
+    public ChessGameController(ILogging logging, IChessBoardController boardController) {
         this.logger = logging.getLogger(getClass());
         this.boardController = boardController;
     }

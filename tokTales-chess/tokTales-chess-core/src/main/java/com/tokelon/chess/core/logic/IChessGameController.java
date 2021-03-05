@@ -2,7 +2,7 @@ package com.tokelon.chess.core.logic;
 
 import com.tokelon.chess.core.entities.ChesspieceColor;
 
-public interface IChessController {
+public interface IChessGameController {
 
 
     public IChessBoardController getBoardController();
@@ -17,7 +17,7 @@ public interface IChessController {
 
     // TODO: Add gamemode, elo, fen, options etc
     public void newGame(IPlayer white, IPlayer black);
-    //public void newGame(IPlayer playerOne, IPlayer playerTwo);
+    //public void newGame(IPlayer playerOne, IPlayer playerTwo, String fen);
 
     public void update(long timeMillis);
 

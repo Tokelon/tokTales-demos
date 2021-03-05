@@ -3,7 +3,7 @@ package com.tokelon.chess.core.state;
 import com.tokelon.chess.core.entities.Chesspiece;
 import com.tokelon.chess.core.entities.IChessboard;
 import com.tokelon.chess.core.entities.IChesspiece;
-import com.tokelon.chess.core.logic.IChessController;
+import com.tokelon.chess.core.logic.IChessGameController;
 import com.tokelon.chess.core.logic.IChessEngine;
 import com.tokelon.chess.core.logic.IPlayer;
 import com.tokelon.chess.core.logic.Player;
@@ -28,13 +28,13 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
 
 
     private final IBasicRegistry assetKeyRegistry;
-    private final IChessController chessController;
+    private final IChessGameController gameController;
     private final Provider<IChessEngine> chessEngineProvider;
 
     @Inject
-    public BoardGamescene(@GlobalAssetKeyRegistry IBasicRegistry assetKeyRegistry, IChessController chessController, Provider<IChessEngine> chessEngineProvider) {
+    public BoardGamescene(@GlobalAssetKeyRegistry IBasicRegistry assetKeyRegistry, IChessGameController gameController, Provider<IChessEngine> chessEngineProvider) {
         this.assetKeyRegistry = assetKeyRegistry;
-        this.chessController = chessController;
+        this.gameController = gameController;
         this.chessEngineProvider = chessEngineProvider;
     }
 
@@ -52,18 +52,18 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
         blackChessEngine.initialize();
         IPlayer black = new Player(blackChessEngine);
 
-        chessController.newGame(white, black);
+        gameController.newGame(white, black);
     }
 
     @Override
     public void onUpdate(long timeMillis) {
-        chessController.update(timeMillis);
+        gameController.update(timeMillis);
     }
 
 
     @Override
     public IChessboard getChessboard() {
-        return chessController.getBoardController().getChessboard();
+        return gameController.getBoardController().getChessboard();
     }
 
 
@@ -134,14 +134,14 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
                 resetFieldSelection();
             }
             else {
-                if(chessController.tryMove(fieldSelection.x(), fieldSelection.y(), fieldX, fieldY, "")) {
+                if(gameController.tryMove(fieldSelection.x(), fieldSelection.y(), fieldX, fieldY, "")) {
                     resetFieldSelection();
                 }
             }
         }
         else {
             IChesspiece field = getChessboard().getField(fieldX, fieldY);
-            if(field != null && field.getColor() == chessController.getCurrentColor() && !chessController.getCurrentPlayer().isEngine()) {
+            if(field != null && field.getColor() == gameController.getCurrentColor() && !gameController.getCurrentPlayer().isEngine()) {
                 setFieldSelection(fieldX, fieldY);
             }
         }

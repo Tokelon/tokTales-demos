@@ -2,11 +2,11 @@ package com.tokelon.chess.core.logic.mock;
 
 import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.logic.IChessBoardController;
-import com.tokelon.chess.core.logic.IChessController;
+import com.tokelon.chess.core.logic.IChessGameController;
 import com.tokelon.chess.core.logic.IPlayer;
 import com.tokelon.chess.core.logic.Player;
 
-public class MockChessController implements IChessController {
+public class MockChessGameController implements IChessGameController {
 
 
     private final MockChessBoardController boardController = new MockChessBoardController();

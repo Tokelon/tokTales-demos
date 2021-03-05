@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ChesslibController implements IChessBoardController {
+public class ChesslibBoardController implements IChessBoardController {
 
 
     private Chessboard chessboard = new Chessboard();
@@ -24,7 +24,7 @@ public class ChesslibController implements IChessBoardController {
     private final ILogger logger;
 
     @Inject
-    public ChesslibController(ILogging logging) {
+    public ChesslibBoardController(ILogging logging) {
         this.logger = logging.getLogger(getClass());
     }
 
