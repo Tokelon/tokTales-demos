@@ -43,9 +43,4 @@ public class ChessAdapter extends EmptyGameAdapter {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        System.exit(0); // Destroy executor threads
-    }
-
 }
