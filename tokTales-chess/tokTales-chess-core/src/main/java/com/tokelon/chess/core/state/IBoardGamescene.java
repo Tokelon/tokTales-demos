@@ -1,6 +1,5 @@
 package com.tokelon.chess.core.state;
 
-import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.IChessboard;
 import com.tokelon.chess.core.entities.IChesspiece;
 import com.tokelon.toktales.core.content.manage.bitmap.IBitmapAssetKey;
@@ -31,8 +30,6 @@ public interface IBoardGamescene extends IGameScene {
 
 
     public IPoint2i getFieldSelection();
-
-    public ChesspieceColor getCurrentPlayer();
 
 
     public IBitmapAssetKey getAssetKey(String assetKeyName);
