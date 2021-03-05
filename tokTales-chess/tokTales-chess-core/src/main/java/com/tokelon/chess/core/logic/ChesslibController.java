@@ -13,25 +13,50 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class ChesslibController extends AbstractChessController {
+    // TODO: Change this into IChessBoard and decouple from controller?
 
 
-    private final Board board;
+    private Board board;
 
     private final ILogger logger;
 
     @Inject
-    public ChesslibController(ILogging logging, IChessEngine chessEngine) {
-        super(logging, chessEngine);
+    public ChesslibController(ILogging logging) {
+        super(logging);
 
         this.logger = logging.getLogger(getClass());
-
-        GameContext gameContext = new GameContext(GameMode.HUMAN_VS_MACHINE, VariationType.NORMAL);
-        this.board = new Board(gameContext, true);
     }
 
 
     @Override
-    public boolean doMove(String from, String to) {
+    public void newGame(IPlayer white, IPlayer black) {
+        super.newGame(white, black);
+
+        GameContext gameContext = new GameContext(getGameMode(white, black), VariationType.NORMAL);
+        this.board = new Board(gameContext, true);
+    }
+
+    private GameMode getGameMode(IPlayer white, IPlayer black) {
+        GameMode gameMode;
+        if(white.isEngine() && black.isEngine()) {
+            gameMode = GameMode.MACHINE_VS_MACHINE;
+        }
+        else if(!white.isEngine() && !black.isEngine()) {
+            gameMode = GameMode.HUMAN_VS_HUMAN;
+        }
+        else if(white.isEngine()) {
+            gameMode = GameMode.HUMAN_VS_MACHINE;
+        }
+        else {
+            gameMode = GameMode.MACHINE_VS_HUMAN;
+        }
+
+        return gameMode;
+    }
+
+
+    @Override
+    protected boolean doMove(String from, String to) {
         Move move = new Move(from + to, null);
 
         List<Move> moves = board.legalMoves();
@@ -40,13 +65,12 @@ public class ChesslibController extends AbstractChessController {
             return false;
         }
 
-        boolean result = board.doMove(move, true);
+        return board.doMove(move, true);
+    }
 
-        if(result) {
-            getEngine().nextMove(board.getFen(), from + to);
-        }
-
-        return result;
+    @Override
+    protected String getFen() {
+        return board.getFen();
     }
 
 }

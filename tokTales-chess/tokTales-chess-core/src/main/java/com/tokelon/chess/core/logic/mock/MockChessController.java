@@ -3,25 +3,16 @@ package com.tokelon.chess.core.logic.mock;
 import com.tokelon.chess.core.entities.Chessboard;
 import com.tokelon.chess.core.entities.ChesspieceColor;
 import com.tokelon.chess.core.entities.IChessboard;
-import com.tokelon.chess.core.logic.IChessEngine;
 import com.tokelon.chess.core.logic.IChessController;
+import com.tokelon.chess.core.logic.IPlayer;
+import com.tokelon.chess.core.logic.Player;
 
 public class MockChessController implements IChessController {
 
 
     private final Chessboard chessboard = new Chessboard();
-    private final MockUCIChessEngine chessEngine = new MockUCIChessEngine();
+    private final Player player = new Player();
 
-
-    @Override
-    public IChessEngine getEngine() {
-        return chessEngine;
-    }
-
-    @Override
-    public boolean doMove(String from, String to) {
-        return true;
-    }
 
     @Override
     public IChessboard getChessboard() {
@@ -29,22 +20,19 @@ public class MockChessController implements IChessController {
     }
 
     @Override
-    public ChesspieceColor getCurrentPlayer() {
+    public ChesspieceColor getCurrentColor() {
         return ChesspieceColor.WHITE;
     }
 
     @Override
-    public ChesspieceColor getPlayerColor() {
-        return ChesspieceColor.WHITE;
+    public IPlayer getCurrentPlayer() {
+        return player;
     }
 
     @Override
-    public void initialize() {
+    public void newGame(IPlayer white, IPlayer black) {
     }
 
-    @Override
-    public void newGame() {
-    }
 
     @Override
     public void update(long timeMillis) {

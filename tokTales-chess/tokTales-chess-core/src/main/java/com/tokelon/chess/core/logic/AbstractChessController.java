@@ -7,28 +7,25 @@ import com.tokelon.toktales.core.engine.log.ILogger;
 import com.tokelon.toktales.core.engine.log.ILogging;
 
 public abstract class AbstractChessController implements IChessController {
-    // Probably going to become AbstractGameEngine
 
 
     private Chessboard chessboard;
 
     private ChesspieceColor currentColor;
-    private ChesspieceColor playerColor;
 
+    private IPlayer white;
+    private IPlayer black;
 
     private final ILogger logger;
-    private final IChessEngine chessEngine;
 
-    public AbstractChessController(ILogging logging, IChessEngine chessEngine) {
+    public AbstractChessController(ILogging logging) {
         this.logger = logging.getLogger(getClass());
-        this.chessEngine = chessEngine;
     }
 
 
-    @Override
-    public IChessEngine getEngine() {
-        return chessEngine;
-    }
+    protected abstract boolean doMove(String from, String to);
+
+    protected abstract String getFen();
 
 
     @Override
@@ -37,36 +34,45 @@ public abstract class AbstractChessController implements IChessController {
     }
 
     @Override
-    public ChesspieceColor getCurrentPlayer() {
+    public ChesspieceColor getCurrentColor() {
         return currentColor;
     }
 
     @Override
-    public ChesspieceColor getPlayerColor() {
-        return playerColor;
+    public IPlayer getCurrentPlayer() {
+        return getCurrentColor() == ChesspieceColor.WHITE ? white : black;
     }
 
-    @Override
-    public void initialize() {
-        getEngine().initialize();
-    }
 
     @Override
-    public void newGame() {
+    public void newGame(IPlayer white, IPlayer black) {
+        this.white = white;
+        this.black = black;
+
         this.chessboard = Chessboard.createInitial();
         this.currentColor = ChesspieceColor.WHITE;
-        this.playerColor = ChesspieceColor.WHITE;
 
-        getEngine().newGame();
+        if(white.isEngine()) {
+            white.getEngine().newGame();
+
+            white.getEngine().startNextMove();
+        }
+
+        if(black.isEngine()) {
+            black.getEngine().newGame();
+        }
     }
 
 
     @Override
     public void update(long timeMillis) {
-        String nextMove = getEngine().getAndResetNextMove();
-        if(nextMove != null) {
-            engineMove(nextMove);
-            startNextTurn();
+        if(getCurrentPlayer().isEngine()) {
+            String nextMove = getCurrentPlayer().getEngine().getAndResetNextMove();
+
+            if(nextMove != null) {
+                engineMove(nextMove);
+                startNextTurn();
+            }
         }
     }
 
@@ -82,23 +88,12 @@ public abstract class AbstractChessController implements IChessController {
     }
 
 
-    public void startNextTurn() {
+    protected void startNextTurn() {
         currentColor = currentColor == ChesspieceColor.WHITE ? ChesspieceColor.BLACK : ChesspieceColor.WHITE;
 
-        if(currentColor != playerColor) {
-            startAITurn();
+        if(getCurrentPlayer().isEngine()) {
+            getCurrentPlayer().getEngine().startNextMove();
         }
-        else {
-            startPlayerTurn();
-        }
-    }
-
-    public void startPlayerTurn() {
-        // Nothing yet
-    }
-
-    public void startAITurn() {
-        getEngine().startNextMove();
     }
 
 
@@ -109,6 +104,10 @@ public abstract class AbstractChessController implements IChessController {
 
         if(doMove(from, to)) {
             getChessboard().movePiece(fromX, fromY, toX, toY);
+
+            if(getCurrentPlayer().isEngine()) {
+                getCurrentPlayer().getEngine().nextMove(getFen(), from + to);
+            }
 
             logger.info("Move completed from [{}, {}] to [{}, {}]", fromX, fromY, toX, toY);
             return true;

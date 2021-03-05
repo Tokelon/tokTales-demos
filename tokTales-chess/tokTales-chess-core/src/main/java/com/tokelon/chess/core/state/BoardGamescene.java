@@ -4,6 +4,9 @@ import com.tokelon.chess.core.entities.Chesspiece;
 import com.tokelon.chess.core.entities.IChessboard;
 import com.tokelon.chess.core.entities.IChesspiece;
 import com.tokelon.chess.core.logic.IChessController;
+import com.tokelon.chess.core.logic.IChessEngine;
+import com.tokelon.chess.core.logic.IPlayer;
+import com.tokelon.chess.core.logic.Player;
 import com.tokelon.toktales.core.content.manage.bitmap.IBitmapAssetKey;
 import com.tokelon.toktales.core.engine.inject.annotation.GlobalAssetKeyRegistry;
 import com.tokelon.toktales.core.game.model.IPoint2i;
@@ -13,6 +16,7 @@ import com.tokelon.toktales.core.game.state.scene.BaseGamescene;
 import com.tokelon.toktales.tools.core.registry.IBasicRegistry;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
 
@@ -25,11 +29,13 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
 
     private final IBasicRegistry assetKeyRegistry;
     private final IChessController chessController;
+    private final Provider<IChessEngine> chessEngineProvider;
 
     @Inject
-    public BoardGamescene(@GlobalAssetKeyRegistry IBasicRegistry assetKeyRegistry, IChessController chessController) {
+    public BoardGamescene(@GlobalAssetKeyRegistry IBasicRegistry assetKeyRegistry, IChessController chessController, Provider<IChessEngine> chessEngineProvider) {
         this.assetKeyRegistry = assetKeyRegistry;
         this.chessController = chessController;
+        this.chessEngineProvider = chessEngineProvider;
     }
 
 
@@ -37,9 +43,16 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
     public void onAssign() {
         super.onAssign();
 
-        chessController.initialize();
 
-        chessController.newGame();
+        //IChessEngine whiteChessEngine = chessEngineProvider.get();
+        //IPlayer white = new Player(whiteChessEngine);
+        IPlayer white = new Player();
+
+        IChessEngine blackChessEngine = chessEngineProvider.get();
+        blackChessEngine.initialize();
+        IPlayer black = new Player(blackChessEngine);
+
+        chessController.newGame(white, black);
     }
 
     @Override
@@ -116,7 +129,7 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
             throw new IllegalArgumentException("Coordinates must be >= 0 and <= chessboard size");
         }
 
-        if(hasFieldSelection() ) {
+        if(hasFieldSelection()) {
             if (fieldX == fieldSelection.x() && fieldY == fieldSelection.y()) {
                 resetFieldSelection();
             }
@@ -128,7 +141,7 @@ public class BoardGamescene extends BaseGamescene implements IBoardGamescene {
         }
         else {
             IChesspiece field = getChessboard().getField(fieldX, fieldY);
-            if(field != null && field.getColor() == chessController.getPlayerColor()) { // currentColor
+            if(field != null && field.getColor() == chessController.getCurrentColor() && !chessController.getCurrentPlayer().isEngine()) {
                 setFieldSelection(fieldX, fieldY);
             }
         }

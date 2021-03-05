@@ -6,22 +6,17 @@ import com.tokelon.chess.core.entities.IChessboard;
 public interface IChessController {
 
 
-    public IChessEngine getEngine();
-
-    public boolean doMove(String from, String to);
-
-
     public IChessboard getChessboard();
 
-    public ChesspieceColor getCurrentPlayer();
-    public ChesspieceColor getPlayerColor();
+    public ChesspieceColor getCurrentColor();
 
+    public IPlayer getCurrentPlayer();
+    //public IPlayer getWhite();
+    //public IPlayer getBlack();
 
-
-    public void initialize();
 
     // TODO: Add gamemode, elo, fen, options etc
-    public void newGame();
+    public void newGame(IPlayer white, IPlayer black);
     //public void newGame(IPlayer playerOne, IPlayer playerTwo);
 
     public void update(long timeMillis);
