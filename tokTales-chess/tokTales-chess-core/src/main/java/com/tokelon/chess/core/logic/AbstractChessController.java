@@ -6,9 +6,7 @@ import com.tokelon.chess.core.entities.IChessboard;
 import com.tokelon.toktales.core.engine.log.ILogger;
 import com.tokelon.toktales.core.engine.log.ILogging;
 
-import javax.inject.Inject;
-
-public class ChessController implements IChessController {
+public abstract class AbstractChessController implements IChessController {
     // Probably going to become AbstractGameEngine
 
 
@@ -19,12 +17,17 @@ public class ChessController implements IChessController {
 
 
     private final ILogger logger;
-    private final IChessEngine chessEngine;
+    private final IChessAI chessAI;
 
-    @Inject
-    public ChessController(ILogging logging, IChessEngine chessEngine) {
+    public AbstractChessController(ILogging logging, IChessAI chessAI) {
         this.logger = logging.getLogger(getClass());
-        this.chessEngine = chessEngine;
+        this.chessAI = chessAI;
+    }
+
+
+    @Override
+    public IChessAI getAI() {
+        return chessAI;
     }
 
 
@@ -45,7 +48,7 @@ public class ChessController implements IChessController {
 
     @Override
     public void initialize() {
-        chessEngine.getAI().initialize();
+        getAI().initialize();
     }
 
     @Override
@@ -54,13 +57,13 @@ public class ChessController implements IChessController {
         this.currentColor = ChesspieceColor.WHITE;
         this.playerColor = ChesspieceColor.WHITE;
 
-        chessEngine.getAI().newGame();
+        getAI().newGame();
     }
 
 
     @Override
     public void update(long timeMillis) {
-        String nextMove = chessEngine.getAI().getAndResetNextMove();
+        String nextMove = getAI().getAndResetNextMove();
         if(nextMove != null) {
             engineMove(nextMove);
             startNextTurn();
@@ -95,7 +98,7 @@ public class ChessController implements IChessController {
     }
 
     public void startAITurn() {
-        chessEngine.getAI().startNextMove();
+        getAI().startNextMove();
     }
 
 
@@ -104,7 +107,7 @@ public class ChessController implements IChessController {
         String to = chessboard.fieldToNotationX(toX) + Byte.toString(chessboard.fieldToNotationY(toY));
         logger.info("Move {}{}", from, to);
 
-        if(chessEngine.doMove(from, to)) {
+        if(doMove(from, to)) {
             getChessboard().movePiece(fromX, fromY, toX, toY);
 
             logger.info("Move completed from [{}, {}] to [{}, {}]", fromX, fromY, toX, toY);

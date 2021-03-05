@@ -7,6 +7,11 @@ public interface IChessController {
     // TODO: Merge into IGameEngine
 
 
+    public IChessAI getAI();
+
+    public boolean doMove(String from, String to);
+
+
     public IChessboard getChessboard();
 
     public ChesspieceColor getCurrentPlayer();

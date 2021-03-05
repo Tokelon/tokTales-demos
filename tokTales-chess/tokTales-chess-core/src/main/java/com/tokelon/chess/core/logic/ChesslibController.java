@@ -12,29 +12,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ChesslibEngine implements IChessEngine {
+public class ChesslibController extends AbstractChessController {
 
 
     private final Board board;
 
-    private final IChessAI chessAI;
     private final ILogger logger;
 
     @Inject
-    public ChesslibEngine(ILogging logging, IChessAI chessAI) {
+    public ChesslibController(ILogging logging, IChessAI chessAI) {
+        super(logging, chessAI);
+
         this.logger = logging.getLogger(getClass());
 
         GameContext gameContext = new GameContext(GameMode.HUMAN_VS_MACHINE, VariationType.NORMAL);
         this.board = new Board(gameContext, true);
-
-        this.chessAI = chessAI;
     }
 
-
-    @Override
-    public IChessAI getAI() {
-        return chessAI;
-    }
 
     @Override
     public boolean doMove(String from, String to) {
@@ -49,7 +43,7 @@ public class ChesslibEngine implements IChessEngine {
         boolean result = board.doMove(move, true);
 
         if(result) {
-            chessAI.nextMove(board.getFen(), from + to);
+            getAI().nextMove(board.getFen(), from + to);
         }
 
         return result;
