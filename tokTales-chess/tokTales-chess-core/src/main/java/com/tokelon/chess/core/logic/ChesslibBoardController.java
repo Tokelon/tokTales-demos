@@ -6,7 +6,9 @@ import com.github.bhlangonijr.chesslib.game.GameMode;
 import com.github.bhlangonijr.chesslib.game.VariationType;
 import com.github.bhlangonijr.chesslib.move.Move;
 import com.tokelon.chess.core.entities.Chessboard;
+import com.tokelon.chess.core.entities.ChesspieceType;
 import com.tokelon.chess.core.entities.IChessboard;
+import com.tokelon.chess.core.entities.IChesspiece;
 import com.tokelon.toktales.core.engine.log.ILogger;
 import com.tokelon.toktales.core.engine.log.ILogging;
 
@@ -70,12 +72,16 @@ public class ChesslibBoardController implements IChessBoardController {
         int fromY = chessboard.notationToFieldY(Byte.parseByte(String.valueOf(move.charAt(1))));
         int toX = chessboard.notationToFieldX(move.charAt(2));
         int toY = chessboard.notationToFieldY(Byte.parseByte(String.valueOf(move.charAt(3))));
-        String addition = move.substring(4); // TODO: Use for special moves
+        String addition = move.substring(4);
+
 
         boolean success = board.doMove(boardMove, true);
         if(success) {
-            chessboard.movePiece(fromX, fromY, toX, toY);
+            if(doSpecialMove(fromX, fromY, toX, toY, addition)) {
+                logger.info("Special move completed for: {}", move);
+            }
 
+            chessboard.movePiece(fromX, fromY, toX, toY);
             logger.info("Move completed from [{}, {}] to [{}, {}]", fromX, fromY, toX, toY);
         }
         else {
@@ -83,6 +89,32 @@ public class ChesslibBoardController implements IChessBoardController {
         }
 
         return success;
+    }
+
+    protected boolean doSpecialMove(int fromX, int fromY, int toX, int toY, String addition) {
+        // TODO: Implement promotion (use addition), en-passant, etc.
+        boolean specialMove = false;
+
+        boolean boardIsFlipped = fromX < chessboard.getSize() / 2;
+        IChesspiece fromField = chessboard.getField(fromX, fromY);
+        ChesspieceType fromType = fromField == null ? null : fromField.getType();
+
+
+        boolean isCastle = fromType == ChesspieceType.KING && fromY == toY && Math.abs(fromX - toX) > 1;
+        if(isCastle) {
+            specialMove = true;
+
+            boolean kingSize = toX > fromX && !boardIsFlipped;
+            int fromModifier = kingSize ? 1 : -2;
+            int toModifier = kingSize ? 1 : -1;
+
+            chessboard.movePiece(toX + fromModifier, toY, toX - toModifier, toY);
+
+            String castleMove = kingSize ? "0-0" : "0-0-0";
+            logger.info("Castle move {} completed from [{}, {}] to [{}, {}]", castleMove, toX + fromModifier, toY, toX - toModifier, toY);
+        }
+
+        return specialMove;
     }
 
 
